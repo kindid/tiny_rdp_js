@@ -32,7 +32,7 @@ Parser.prototype.is = function(t, t1) {
             return true
         }
     } else {
-        let cc = return(this.input[this.index])
+        let cc = this.input[this.index]
         let q = false
         if (t1 === undefined) q = (cc === t);
         else q = (cc >= t && cc <= t1)
