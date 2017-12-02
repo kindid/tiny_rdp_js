@@ -120,4 +120,4 @@ let P = new Parser(text);
 let q = P.parse(my_parsing_function)
 ```
 
-code@kuiash.com
+(C) kuiash.com 2017
