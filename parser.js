@@ -2,10 +2,6 @@
 // (C) kuiash.com ltd 2017+ code@kuiash.com ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-// it's an object because you want it's state
-// however, you can't return anything from a 'new' except the object - however(!)
-// the object state is complicated and you want to know it. PLUS a pass/fail
-// state... no, you really want the output dude...
 function Parser(input) {
     this.input = input
     this.index = 0
@@ -14,9 +10,6 @@ function Parser(input) {
 
 module.exports.Parser = Parser;
 
-Parser.prototype.peek = function() { return(this.input[this.index]) }
-
-// todo; if 't' is a long string then match the whole string
 Parser.prototype.is = function(t, t1) {
     if (t instanceof Function) {
         let depth = this.stack.length
@@ -29,7 +22,7 @@ Parser.prototype.is = function(t, t1) {
             return true
         }
     } else {
-        let cc = this.peek()
+        let cc = return(this.input[this.index])
         let q = false
         if (t1 === undefined) q = (cc === t);
         else q = (cc >= t && cc <= t1)
