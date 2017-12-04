@@ -10,6 +10,9 @@ function Parser(input) {
 
 module.exports.Parser = Parser;
 
+// how does one patch up the object tree??
+// as each completes
+
 Parser.prototype.is = function(t, t1) {
     if (t instanceof Function) {
         let depth = this.stack.length
