@@ -39,7 +39,6 @@ Parser.prototype.is = function(t, t1) {
         log(this.stack.length, 'is', t.name, this.index);
         let depth = this.stack.length;
         this.stack.push({ name:t, start:this.index, end:-1 })
-        // todo; allow inverting of meaning (test against t1, if t1 === undefined then value is true)
         if (t(this) !== true) {
             // todo - you need to unroll - quite a bit
             // i pass in an 'idx' that has to come back out again - consider
@@ -56,7 +55,6 @@ Parser.prototype.is = function(t, t1) {
     } else {
         log(this.stack.length, 'is', cize(t) + cize(t1 || ' '), this.index);
         if (t.length > 1) {
-            // TODO: check t1 for true/false test
             if (this.input.substr(this.index, t.length) === t) {
                 this.index += t.length;
                 return true;
@@ -65,14 +63,8 @@ Parser.prototype.is = function(t, t1) {
         } else {
             let cc = this.input[this.index]
             let q = false
-            if (t1 === undefined || t1 === true || t1 === false) {
-                q = (cc === t)
-                if (t1 === false) {
-                    q = !q;
-                }
-            }
+            if (t1 === undefined) q = (cc === t)
             else q = (cc >= t && cc <= t1)
-            // invert meaning if required
             if (q) this.index++;
 
             if (q) { log(this.stack.length, 'pass', cize(cc || '?') + ' is ' + cize(t) + cize(t1 || ' '), this.index); }

@@ -37,6 +37,8 @@ function div_op(parser) { return(parser.is('/')) }
 // term ::= factor '/' term
 // term ::= factor
 
+// automatically calls 'start' - now, when you return you want that
+// data back to unwind the stack... there's a total fuck up that needs fixing
 function term(parser)
 {
     if (parser.is(factor)) {
