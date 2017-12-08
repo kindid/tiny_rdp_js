@@ -45,7 +45,7 @@ function ws(parser) {
     if (parser.is(';')) {
         // todo; need 'is_not' functionality - exactly the same but swap the meaning
         // pass a second parameter if it's true then the operation is inverted
-        while(parser.is('\n', false) && parser.is('\r', false));
+        while(parser.is('\n', false) || parser.is('\r', false));
         // skip more whitespace
         while(parser.is(' ') || parser.is('\t') || parser.is('\n') || parser.is('\r'));
     }

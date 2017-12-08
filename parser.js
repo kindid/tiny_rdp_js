@@ -63,11 +63,13 @@ Parser.prototype.is = function(t, t1) {
             }
             return false;
         } else {
+            let is_t = 'is'
             let cc = this.input[this.index]
             let q = false
             if (t1 === undefined || t1 === true || t1 === false) {
                 q = (cc === t)
                 if (t1 === false) {
+                    is_t = '!is'
                     q = !q;
                 }
             }
@@ -75,8 +77,8 @@ Parser.prototype.is = function(t, t1) {
             // invert meaning if required
             if (q) this.index++;
 
-            if (q) { log(this.stack.length, 'pass', cize(cc || '?') + ' is ' + cize(t) + cize(t1 || ' '), this.index); }
-            else { log(this.stack.length, 'fail', cize(cc || '?') + ' is ' + cize(t) + cize(t1 || ' '), this.index); }
+            if (q) { log(this.stack.length, 'pass', cize(cc || '?') + ' ' + is_t + ' ' + cize(t) + cize(t1 || ' '), this.index); }
+            else { log(this.stack.length, 'fail', cize(cc || '?') + ' ' + is_t + ' ' + cize(t) + cize(t1 || ' '), this.index); }
 
             return q
         }
