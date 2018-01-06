@@ -38,17 +38,59 @@ function number(parser) {
         return true;
     }
 }
+// as you go down the function names
+// you are creating a tree (on the way up and down c2p p2c)
+// however, i'm not yet recording that yet.
+//
+
+function comment(parser) {
+    if (parser.is(';')) {
+        // test for \n - if that is not found (true) then continue
+        // test for \r - if that is not found (true) then continue
+        // if both tests are true (it is not \n AND not \r) then continue
+        // one or other WILL fail because the char can't be \n AND \r
+
+        // so - you try '\n' if it does NOT match then you step forward a character
+        //
+
+        // if you DO NOT match \n then give up (or semantics) - step forward
+        // if you DO NOT match \r then give up (or semantics) - step forward
+
+        // yeah, \n did NOT match - it returns true, the
+        // but that means that the OR is gonna give up on you....
+        /// that is, you returned 'true' so that next char will continue
+//        while(parser.is_not('\n') || parser.is_not('\r')) ;
+        while(parser.is_not('\n\r')) ;
+        //while(!(parser.is('\n') || parser.is('\r'))) ;
+        return true;
+    }
+}
+
 // wherever you can have white space you can have a comment!
 // it starts with ';' and ends with /n or /r
 function ws(parser) {
     while(parser.is(' ') || parser.is('\t') || parser.is('\n') || parser.is('\r'));
-    if (parser.is(';')) {
-        // todo; need 'is_not' functionality - exactly the same but swap the meaning
-        // pass a second parameter if it's true then the operation is inverted
-        while(parser.is('\n', false) || parser.is('\r', false));
-        // skip more whitespace
+    parser.is(comment);
+    // if (parser.is(';')) {
+    //     // consider this as the inversion of all test - it's a test just like about
+    //     // but for all characters that you don't have.
+    //
+    //
+    //     // todo; need 'is_not' functionality - exactly the same but swap the meaning
+    //     // pass a second parameter if it's true then the operation is inverted
+    //     // this reads like shit - should be parser.is_not
+    //
+    //     // test for \n - if that is not found (true) then continue
+    //     // test for \r - if that is not found (true) then continue
+    //     // if both tests are true (it is not \n AND not \r) then continue
+    //     // one or other WILL fail because the char can't be \n AND \r
+    //     // if they both fail
+    //
+    //     while(parser.is_not('\n') && parser.is_not('\r')) ;
+
+        // skip more whitespace - should this be invoked recursively?
         while(parser.is(' ') || parser.is('\t') || parser.is('\n') || parser.is('\r'));
-    }
+    //}
     // i'm skeptikal...
     return true;
 }
@@ -104,6 +146,7 @@ function struct_list(parser) {
     ws(parser);
     if (parser.is(list_start)) {
         while(parser.is(assign)) {
+            // replace with if (seperator(parser)) as you don't really care to record this!
             if (parser.is(separator)) {
                 // expect another value
             } else {
@@ -176,6 +219,9 @@ function list_end(parser) {
     }
 }
 
+// how does a 'comment' fit here? does it count as a seperator
+// remember the language isn't really line based - but the end of a comment is a line break
+// it acts like white space
 function separator(parser) {
     if(parser.is(' ') || parser.is('\t') || parser.is('\n') || parser.is('\r')) {
         ws(parser);
